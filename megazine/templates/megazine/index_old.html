@@ -1,0 +1,47 @@
+{% extends "megazine/layout.html" %}
+{% load thumbnail %}
+{% block extra_head %}
+<style>
+    #post_list .media {
+        margin-bottom: 10px;
+    }
+    #post_list .media-object {
+        width: 100px;
+        height: 100px;
+    }
+    div.media-body{
+        max-height:100px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row" id="post_list">
+        {% for post in post_list %}
+            <div class="col-sm-6">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="/megazine/{{ post.id }}/">
+                            {% if post.image %}
+                                {% thumbnail post.image "100x100" crop='center' quality=80 as im %}
+                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height}}">
+                                {% endthumbnail %}
+                            {% else %}
+                                <img src="http://lorempixel.com/100/100/cats/{{ post.id | get_digit:"1"}}"/>
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"><strong>{{ post.title }}</strong></h4>
+                        {{ post.content|linebreaks|truncatechars:55 }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<p class="text-center">
+    <a href="{% url "megazine:new" %}" class="btn btn-info">새 포스팅</a>
+</p>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "accounts/layout.html" %}
+{% load bootstrap3 %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+        <div class="col-sm-12">
+            <div class="panel-body">
+            {% if message %}
+                <div> {{ message }} </div>
+            {% endif %}
+            <div>
+                <form action="" method="post" class="form" >
+                    {% bootstrap_form form %}
+                    {% csrf_token %}
+                    {% buttons %}
+                        <button type="submit" class="btn btn-default">
+                            Submit
+                        </button>
+                    {% endbuttons %}
+                </form>
+            </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

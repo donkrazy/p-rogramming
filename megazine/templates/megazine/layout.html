@@ -1,0 +1,123 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project/magazine</title>
+  <link rel="icon" href="{% static 'icon.jpg' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.5-dist/css/bootstrap.min.css' %}" />
+  <link type="text/css" href="{% static 'layout.css' %}" rel="stylesheet">
+  <style>
+    #footer {
+        line-height: 20px;
+        padding: 30px 20px;
+        background-color:#F8F8F8;
+    }
+    *{
+        font-family: "나눔고딕";
+    }
+    html, body{
+      height:100%;
+    }
+  </style>
+  <script src="{% static "jquery-1.11.3.min.js" %}"></script>
+  <script src="{% static "bootstrap-3.3.5-dist/js/bootstrap.min.js" %}"></script>
+  <script src="{% static "jquery.toaster.js" %}"></script>
+  <script src="{% static "jquery.csrf.js" %}"></script>
+  <script src="//maps.googleapis.com/maps/api/js"></script>
+  {% block extra_head %}
+  {% endblock %}
+</head>
+
+<body role="document">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url "megazine:index" %}" id="dd">Magazine</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="{% url "megazine:index" %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+        <li><a href="#about"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
+        <li><a href="#contact"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> Contact</a></li>
+        <li><a href="#visitor"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Visitor</a></li>
+        <li>
+          <form action="/magazine/" class="navbar-form navbar-right" method="GET">
+              <div class="form-group">
+                <input type="text" placeholder="ex)statistics" class="form-control" name="tags">
+                <button type="submit" class="btn btn-default">search</button>
+              </div>
+          </form>
+        </li>
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url "megazine:new" %}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> New Post</a></li>
+        <li class="dropdown">
+          {% if not user.is_authenticated %}
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="" onclick="window.open('{% url "signup" %}', 'newwindow', 'width=500, height=580'); return false;">Signup</a></li>
+            <li><a href="" onclick="window.open('{% url "login" %}?next=/refresh', 'newwindow', 'width=500, height=450'); return false;">Login by ID/PW</a></li>
+            <li><a href="" onclick="window.open('{% url "login_email" %}', 'newwindow', 'width=500, height=280'); return false;">Login by Email</a></li>
+          {% else %}
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ user }}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="{% url "info" %}">Your account</a></li>
+              <li><a href="{% url "logout" %}?next=/magazine">Logout</a></li>
+            </ul>
+          {% endif %}
+        </li>
+      </ul>
+
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+      <div class="col-sm-12">
+          {% if messages %}
+              {% for message in messages %}
+              <script>
+                  $.toaster({
+                      title: '{{ message.tags }}',
+                      priority: '{{ message.tags }}',
+                      message: '{{ message }}'
+                  });
+              </script>
+              {% endfor %}
+          {% endif %}
+      </div>
+  </div>
+</div>
+
+{% block content %}
+{% endblock %}
+<hr>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+        <div class="col-sm-6 text-muted">
+            파이썬 웹프레임워크인 <a href="http://djangoproject.com" target="_blank">Django</a> 로 만들었습니다.<br/>
+        </div>
+        <div class="col-sm-6 text-right">
+            <a href="naver.com" target="_blank">Kim awet</a>
+        </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

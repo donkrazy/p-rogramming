@@ -1,0 +1,16 @@
+<tr>
+  <td>
+    {% if forloop.counter %}
+      <span style="display:inline-block">{{ forloop.counter }}</span>
+   {% else %}
+      <span style="color:red; font-family:bold">new</span>
+   {% endif %}
+  </td>
+  <td>{{ comment.author }}</td>
+  <td>{{ comment.content }}</td>
+  <td>
+      <a href="{% url "megazine:comment_edit" comment.pk %}"><span class="icon glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+      <a href="{% url "megazine:comment_delete" comment.pk %}"data-comment-id="comment_{{ comment.pk }}" id="delete_comment">&nbsp;<span class="icon glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+  </td>
+  <td>{{ comment.created_at|date:"y.m.d H:i:s" }}</td>
+</tr>

@@ -1,0 +1,29 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="icon" href="{% static 'icon.jpg' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.5-dist/css/bootstrap.min.css' %}" />
+    <link type="text/css" href="{% static 'layout.css' %}" rel="stylesheet">
+    <style>
+        *{
+            font-family:'나눔고딕' '고딕'
+        }
+    </style>
+    {% block extra_head %}
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <span class="navbar-brand">Magazine - <span style="font-size:15px">{{ title }}</span></span>
+            </div>
+        </div>
+    </nav>
+{% block content %}
+{% endblock %}
+</body>

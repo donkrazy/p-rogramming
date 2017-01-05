@@ -1,0 +1,27 @@
+<!--detail.html
+<div class="panel panel-default" >
+  <div class="panel-heading">댓글 목록</div>
+    <ul class="list-group" id="comment_list">
+        {% for comment  in post.comment_set.all %}
+        {% include "megazine/comment_row.html" %}
+        {% empty %}
+            <li class="list-group-item">등록된 댓글이 없습니다. </li>
+        {% endfor %}
+    </ul>
+</div>
+-->
+
+<li id="comment_{{ comment.pk }}" class="list-group-item " >
+    {% if forloop.counter %}
+    <span style="display:inline-block">{{ forloop.counter }}.</span>
+    {% else %}
+    <span style="color:red; font-family:bold">new</span>
+    {% endif %}
+    <span>{{ comment.author }} |</span>
+    <div style="display:inline-block">&nbsp;{{ comment.content }}</div>
+    <a href="{% url "megazine:comment_edit" comment.pk %}"><span class="icon glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+    <a href="{% url "megazine:comment_delete" comment.pk %}"data-comment-id="comment_{{ comment.pk }}" id="delete_comment">&nbsp;<span class="icon glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+    <div style="float:right" class="date">&nbsp; {{ comment.created_at|date:"y.m.d H:i:s" }}</div>
+</li>
+
+

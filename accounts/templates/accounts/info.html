@@ -1,0 +1,21 @@
+{% extends "megazine/layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="font-size:20px;">Your account</div>
+                <div class="panel-body">
+                   <h4>ID: {{ request.user }}</h4>
+                   <h4>
+                    Email: {% if request.user.email%}{{ request.user.email }}
+                    {% else %} not registered {% endif %}
+                   </h4>
+                   <h4>date joined: {{ request.user.date_joined|date:"y.m.d H:i:s"}}</h4>
+                   <h4>last login: {{ request.user.last_login|date:"y.m.d H:i:s"}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

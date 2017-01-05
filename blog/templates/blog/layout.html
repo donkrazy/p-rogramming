@@ -1,0 +1,59 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html>
+<head>
+<meta charset = "utf-8"/>
+<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/flatly/bootstrap.min.css" />
+<title> student777님의 블로그 </title>
+<head>
+<style>
+#footer {
+    background-color: #333333;
+    line-height: 20px;
+    padding: 30px 20px;
+    margin-top: 60px;
+}
+</style>
+{% block extra_head %}
+{% endblock %}
+</head>
+<body>
+
+<div class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">LOL 대전기록</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                            {{ message }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 text-muted">
+                파이썬 웹프레임워크인 <a href="http://djangoproject.com" target="_blank">Django</a> 로 만들었습니다.<br/>
+            </div>
+        </div>
+    </div>
+</footer>

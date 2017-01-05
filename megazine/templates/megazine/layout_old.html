@@ -1,0 +1,101 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+    <title> MEGAAAAAAAAZINE</title>
+    <meta charset = 'utf-8'/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.5-dist/css/bootstrap.min.css' %}" />
+    <style>
+        #dd{
+            font-family: "sans-serif" bold;
+            font-size: 26px;
+            width: 50vw;
+        }
+        #footer {
+            background-color: #f8f8f8;
+            line-height: 20px;
+            padding: 20px 20px 300px 20px;
+        }
+        *{
+            font-family: "나눔고딕";
+        }
+        .navbar {
+            border-radius: 0;
+        }
+        img {
+            max-width: 100%;
+        }
+    </style>
+    <script src="{% static "jquery-1.11.3.min.js" %}"></script>
+    <script src="{% static "bootstrap-3.3.5-dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "jquery.toaster.js" %}"></script>
+    <script src="{% static "jquery.csrf.js" %}"></script>
+    {% block extra_head%}
+    {% endblock %}
+</head>
+<body>
+    <div class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url "megazine:index" %}" id="dd"><strong style="color:red;">BREAKING</strong> news</a>
+            </div>
+            <div id="navbar-top" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url "megazine:new" %}">새 포스팅</a></li>
+                    {% if not user.is_authenticated %}
+                    <li><a href="" onclick="window.open('{% url "signup" %}?next={{ request.path }}', 'newwindow', 'width=500, height=500'); return false;">Signup</a></li>
+                    <li><a href="{% url "login" %}?next={{ request.path }}">Login by ID</a></li>
+                    <li><a href="{% url "login_email" %}">Login by Email</a></li>
+                    {% else %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ user }}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url "logout" %}?next={{ request.path }}">로그아웃</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                {% if messages %}
+                    {% for message in messages %}
+                    <script>
+                        $.toaster({
+                            title: '{{ message.tags }}',
+                            priority: '{{ message.tags }}',
+                            message: '{{ message }}'
+                        });
+                    </script>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% block content %}
+    {% endblock %}
+    <footer id="footer">
+        <div class="container">
+            <p>
+                파이썬 웹프레임워크인 <a href="http://djangoproject.com" target="_blank">Django</a> 로 만들었습니다.<br/>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

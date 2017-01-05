@@ -1,0 +1,44 @@
+{% extends "blog/layout.html" %}
+
+{% block extra_head %}
+<style>
+#post_list .media {
+    margin-bottom: 10px;
+}
+#post_list .media-object {
+    width: 100px;
+    height: 100px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row" id="post_list">
+
+        {% for post in post_list %}
+            <div class="col-sm-6">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="/blog/{{ post.id }}/">
+                            {% if post.image %}
+                                <img class="media-object" src="{{ post.image.url }}" alt="{{ post.title }}" />
+                            {% else %}
+                                <img class="media-object" src="" alt="이미지없음" />
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ post.title }}</h4>
+                        {{ post.content|linebreaks }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+ <p class="text-center">
+    <a href="{% url "blog:new" %}" class="btn btn-primary">새 포스팅</a>
+</p>
+{% endblock %}

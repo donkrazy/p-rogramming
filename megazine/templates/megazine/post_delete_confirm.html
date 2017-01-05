@@ -1,0 +1,40 @@
+{% extends "megazine/layout.html" %}
+
+{% block extra_head %}
+<style>
+#ff{
+    text-align: right;
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <h4> 삭제하시겠습니까?</h4>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="예, 삭제합니다" class="btn btn-danger"/>
+                        <a href="{% url "megazine:detail" post.id %}" class="btn btn-primary" id="ff">아니오</a>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--
+<form action="" method="get" id="ff">
+    {% csrf_token %}
+    <input type="submit" value="아니오" class="btn btn-danger"/>
+</form>
+-->
+{% endblock %}
+
